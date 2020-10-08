@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Coding Events</title>
+    <link rel="stylesheet" th:href="style.css">
 </head>
 <body>
 
 <h1>All Events</h1>
 
-<ul>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Address</th>
+    </tr>
     <th:block th:each="event : ${events}">
-        <li th:text="${event}"></li>
+        <tr>
+            <td th:text="${event.key}"></td>
+            <td th:text="${event.value}"></td>
+            <td th:replace="fragments :: address"></td>
+        </tr>
+
     </th:block>
-</ul>
+</table>
 
 </body>
 </html>
