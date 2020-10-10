@@ -4,11 +4,9 @@ import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +30,9 @@ public class EventController {
         return "events/create";
     }
 
-    @PostMapping("create") //created new event from form submission
-    public String processCreateEventForm(@RequestParam String eventName, @RequestParam String eventDescription) {
-        EventData.add(new Event(eventName, eventDescription));
+    @PostMapping("create") //created new event from form submission, handler that gets called when someone calls the form to create a new event
+    public String processCreateEventForm(@ModelAttribute Event newEvent) {
+        EventData.add(newEvent);
         return "redirect:";
     }
 
@@ -57,4 +55,19 @@ public class EventController {
         return "redirect:"; //returns you back to event listing
     }
 
+    @GetMapping("edit/{eventId}") //need /{eventId} because of @PathVariable (part C of chapt 12 exercise)
+    public String displayEditForm(Model model, @PathVariable int eventId) {
+        Event event = EventData.getById(eventId); //static method, not creating an instance of the class, didn't call constructor
+        model.addAttribute("event", event);
+        model.addAttribute("title", "Edit Event " + event.getName() + " (ID=" + event.getId() + ")");
+        return "events/edit";  //render our edit page
+    }
+
+    @PostMapping("edit")  //to process form data
+    public String processEditForm(int eventId, String name, String description) {
+        Event event = EventData.getById(eventId);
+        event.setName(name);
+        event.setDescription(description);
+        return "redirect:";
+    }
 }

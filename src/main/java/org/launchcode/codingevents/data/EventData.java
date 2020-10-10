@@ -6,13 +6,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EventData {
+public class EventData {//class whose sole existence is to provide us access to models/data - data access object
 
     //class responsible only for storing event objects, a single point of truth for how event objects are stored
     //all the below are static bc not creating instances, just a collection of methods I can use
     //need a place to put events - data structure of some type
     private static final Map<Integer, Event> events = new HashMap<>(); //type map with key/integer value/event pairs
-
+//above static variable - exists/is the same/shared among all instances of this class
     //get all events
     public static Collection<Event> getAll() {   //going to return a list of events, Collection is an interface that is iterable
         return events.values();
