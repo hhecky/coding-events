@@ -21,15 +21,21 @@ public class Event {
     @Email(message = "Invalid email, try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    private EventType type;
+
+    public Event(String name, String description, String contactEmail, EventType type) {
+        this(); //calling a diff constructer from the same class, needs to be a the top
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.type = type;
+
+    }
+
+    public Event() { //no argument constructor, creates an empty event object,
         this.id = nextId;
         nextId++;
     }
-
-    public Event() {} //no argument constructor, creates an empty event object
 
     public String getName() {
         return name;
@@ -57,6 +63,14 @@ public class Event {
 
     public int getId() {
         return id;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     @Override
